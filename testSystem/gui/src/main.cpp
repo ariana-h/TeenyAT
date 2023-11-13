@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <SDL2/SDL.h>
+#include <cstdlib>
 #include "Screen.h"
 #include "color.h"
 #include "../../../teenyat.h"
@@ -43,15 +44,29 @@ int main( int argc, char* argv[]){
         std::cout << "Please provide an asm file" << std::endl;
         return 1;
     }
-    char * fileName = argv[1];
+    
+    std::string cmd = "./trash " + (std::string)argv[1];
+
+    #if defined(__linux__) // Or #if __linux__
+        cmd = "./trash " + (std::string)argv[1];
+    #elif _WIN32
+        cmd = "trash.exe " + (std::string)argv[1];
+    #else
+        cmd = "./trash " + (std::string)argv[1];
+    #endif
+    
+    std::system(cmd.c_str());
+
+    std::string fileName = "output.trash";
     teenyat t;
     bool success = false;
-	FILE *bin_file = fopen(fileName, "rb");
+	FILE *bin_file = fopen(fileName.c_str(), "rb");
 	if (bin_file != NULL) {
 		success = true;
 		tny_init_from_file(&t, bin_file, bus_read, bus_write);
 	}
 	t.ex_data = &s;
+
     while(SDL_PollEvent(&s.windowEvent) == 0 || s.windowEvent.type != SDL_QUIT){
         switch(s.windowEvent.type){
             case SDL_WINDOWEVENT:

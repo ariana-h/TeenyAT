@@ -10,8 +10,9 @@ JMP !main
     STR $c !Screen $a
     INC $c
     CMP $c #1000
-    JE !main
+    JE !end
     INC $a
     MOD $a 360
     JMP !loop
 !end
+STR $z #E000 $z
