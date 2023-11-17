@@ -20,16 +20,21 @@ JMP !main
 !KEY #FFFE 
 
 !main
-    SET $a $z
+    SET $a 63
     SET $b $z
-    SET $c $z
+    SET $c 0
+    SET $d 0
 !loop
-    STR $c !Screen $a
-    INC $c
-    CMP $c #1000
+    STR $z !X1 $a
+    STR $z !Y1 $b
+    STR $z !X2 $c
+    STR $z !Y2 $d
+    STR $z !FILL $z
+    STR $z !STROKE $z
+    STR $z !LINE $a
+    STR $z !UPDATE $z
+    ADD $d 2
+    CMP $d 64
     JE !end
-    ADD $z $z   ;delay?
-    INC $a
-    MOD $a 360
     JMP !loop
 !end

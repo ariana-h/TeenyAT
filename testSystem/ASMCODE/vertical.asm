@@ -22,37 +22,20 @@ JMP !main
 !main
     SET $a 0
     SET $b 0
-    SET $c 15
-    SET $d 15
-
+    SET $c 0
+    SET $d 63
 !loop
     STR $z !X1 $a
     STR $z !Y1 $b
     STR $z !X2 $c
     STR $z !Y2 $d
-    
     STR $z !FILL $c
-    STR $z !STROKE $z
-    STR $z !RECT $c
+    STR $z !STROKE $c
+    STR $z !LINE $z
     STR $z !UPDATE $z
-
-    INC $c
-    INC $d
     ADD $a 2
-    ADD $b 2 
+    ADD $c 2
+    CMP $a 64
+    JE !end
     JMP !loop
-
-    ;SET $a 63
-    ;SET $b 63
-    ;SET $c 15
-    ;SET $d 15
-
-    ;SET $a 63
-    ;SET $b 0
-    ;SET $c 15
-    ;SET $d 15
-
-    ;SET $a 0
-    ;SET $b 63
-    ;SET $c 15
-    ;SET $d 15
+!end

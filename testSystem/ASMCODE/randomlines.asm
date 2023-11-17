@@ -21,9 +21,9 @@ JMP !main
 
 !main
     SET $a $z
-    SET $b 10
+    SET $b $z
     SET $c 12
-    SET $d 34
+    SET $d 
 !loop
     STR $z !X1 $a
     STR $z !Y1 $b
@@ -31,10 +31,9 @@ JMP !main
     STR $z !Y2 $d
     STR $z !FILL $z
     STR $z !STROKE $z
-    STR $z !LINE $c
+    STR $z !LINE $a
     STR $z !UPDATE $z
-    SUB $c 5
-    MPY $c 2
+    ADD $c 5
     CMP $c #1000
     JE !end
     INC $a
