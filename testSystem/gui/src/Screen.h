@@ -1,16 +1,19 @@
-#ifndef ROBOT_H
-#define ROBOT_H
+#ifndef SCREEN_H
+#define SCREEN_H
 
 #include <iostream>
 #include <ctime>
 #include <sstream>
-#include <SDL2/SDL.h>
+#include <cstdint>
+#include "../tigr.h"
 #include <vector>
 #include "color.h"
 
 class Screen{
     public: 
     static const int size = 64;
+
+    Tigr* window;
     int drawStroke = 1;
     int drawFill  = 1;
     int Window_WIDTH = 640;
@@ -19,27 +22,25 @@ class Screen{
     uint16_t currFillColor = 0;
 
     // 354 - lightLavender 
-    int hue = 268;
+    double hue = 3636;
 
     // 1150 - orig
-    int sat = 1150;
-    int val = 200;
+    double sat = 27;
+    double val = 100;
 
     // Resoulution of each pixel
     double res = (double) Window_WIDTH / size;
-
-    SDL_Window *window;
-    SDL_Renderer *renderer;
-
-    SDL_Event windowEvent;
-
     int mouseX = 0;
     int mouseY = 0;
-    
+    int mouseButton = 0;
+
     int x1 = 0;
     int y1 = 0;
     int x2 = 0;
     int y2 = 0;
+
+    TPixel currFill = TPixel{0,0,0,255};
+    TPixel currStroke = TPixel{0,0,0,255};
 
     //Start 0x8000 - 0x8FFF
     uint16_t live_screen[size*size] = {0};
@@ -47,23 +48,11 @@ class Screen{
     //Start 0x9000 - 0x9FFF
     uint16_t update_screen[size*size] = {0};
 
-    Screen(){
-
+    Screen(double v){
+        hue = v;
         srand(time(nullptr));
-        SDL_Init( SDL_INIT_EVERYTHING   );
-        window = SDL_CreateWindow("Test System GUI", 
-                                SDL_WINDOWPOS_UNDEFINED, 
-                                SDL_WINDOWPOS_UNDEFINED, 
-                                Window_WIDTH, 
-                                Window_HEIGHT, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
-        if(NULL == window){
-            std::cout << "Could not create window" << SDL_GetError() << std::endl;
-        }
-
-
+        window = tigrWindow(Window_WIDTH, Window_HEIGHT, "Test Program", 0);
         // Create renderer and initialize update_screen to lavender
-        renderer =  SDL_CreateRenderer( window, -1, SDL_RENDERER_ACCELERATED);
-        SDL_RenderSetLogicalSize(renderer, size, size);
         for(int i = 0; i < size*size; i++){
             update_screen[i] = hue;
         }
@@ -104,21 +93,19 @@ class Screen{
         // default saturation & value are 50%
         unsigned char r,g,b;
         unsigned char a = 255;
-        col = col % 360;
         //std::cout << col << " " << 50 << " " << 55 << std::endl;
-        convertHSVtoRGB(col, sat, val, &r, &g, &b);
+        HSVtoRGB(col, &r, &g, &b);
+        currFill = TPixel{r,g,b,a};
         //std::cout << (int)r << " " << (int)g << " " << (int)b << std::endl;
-        SDL_SetRenderDrawColor( renderer, r, g, b, a);
     }
 
     void stroke(uint16_t col){
         // default saturation & value are 50%
         unsigned char r,g,b;
         unsigned char a = 255;
-        col = col % 360;
-        convertHSVtoRGB(col, sat, val, &r, &g, &b);
+        HSVtoRGB(col, &r, &g, &b);
+        currStroke = TPixel{r,g,b,a};
         //std::cout << (int)r << " " << (int)g << " " << (int)b << std::endl;
-        SDL_SetRenderDrawColor( renderer, r, g, b, a);
     }
 
     // Set the x1,x2,y1,y2 values
@@ -176,12 +163,10 @@ class Screen{
                 y1 = y2;
                 y2 = temp3;
         }
-
         if(x1 == x2 && y1 != y2){
             verticalLine(x1,y1,y2);
             return;
         }
-        
         int m = (y2 - y1) / (x2 - x1);
         int x = x1;
         int y = y1;
@@ -243,15 +228,11 @@ class Screen{
             for(int x = 0; x < size; x++){
                 int index = y * size + x;
                 fill(live_screen[index]);
-                SDL_RenderDrawPoint(renderer, x, y);
+                tigrFill(window,x*res,y*res,res,res,currFill);
             }
         }
-        SDL_RenderPresent(renderer);
+        tigrUpdate(window);
     }
-
-
-
-
 };
 
 #endif

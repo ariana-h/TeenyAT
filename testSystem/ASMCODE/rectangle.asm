@@ -24,11 +24,12 @@ JMP !main
     SET $b $z
     SET $c 20
     SET $d 34
+    SET $e 30000
     STR $z !X1 $a
     STR $z !Y1 $b
     STR $z !X2 $c
     STR $z !Y2 $d
-    STR $z !FILL $z
+    STR $z !FILL $e
     STR $z !STROKE $z
     STR $z !RECT $c
     STR $z !UPDATE $z
