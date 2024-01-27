@@ -2,8 +2,7 @@ CFLAGS += -I.. -I./include -Os
 CPPFLAGS += $(CFLAGS) --std=c++17
 ifeq ($(OS),Windows_NT)
 	LDFLAGS += -s -lopengl32 -lgdi32
-	# for right now it rm since im using a windows powershell and (del) dosnt work
-	RMCMD = rm 
+	RMCMD = del 
 else
 	RMCMD = rm -f
 	UNAME_S := $(shell uname -s)
@@ -21,7 +20,7 @@ all:
 	g++ -c util.cpp -o util.o $(CPPFLAGS)
 	g++ -c screen.cpp -o screen.o $(CPPFLAGS)
 	g++ -c main.cpp -o main.o $(CPPFLAGS)
-	g++ tigr.o screen.o teenyat.o main.o color.o util.o -o ./bin/system $(LDFLAGS)
+	g++ tigr.o screen.o teenyat.o main.o color.o util.o -o lcd $(LDFLAGS)
 
 clean:
-	$(RMCMD) ./bin/system *.o
+	$(RMCMD) lcd *.o
