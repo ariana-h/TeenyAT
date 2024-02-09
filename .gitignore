@@ -1,0 +1,6 @@
+*.o
+*.exe
+testSystem\gui\output.trash
+testSystem\output.trash
+
+
