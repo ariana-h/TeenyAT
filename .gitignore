@@ -2,5 +2,6 @@
 *.exe
 testSystem\gui\output.trash
 testSystem\output.trash
+tnasm/*.bin
 
 
