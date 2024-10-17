@@ -452,21 +452,14 @@ All instructions are case insensitive. Either uppercase or lowercase instruction
 <a name="run">
 
 ## 7.0 Running TeenyAT Systems 
-TeenyAT systems use make files for compilation. 
 
-### Make the LCD system
+### Run the LCD System
 Run the following commands:  
 `cd lcd`  
 `make`  
-`cd tnasm`  
-`./tnasm path/to/name_of_file.asm`  
-(move bin file into lcd)  
-`cd ..\lcd`  
-`.\lcd.exe ./name_of_file.bin`
-
-
-
-
-
+`cd ..\tnasm`  
+`make`  
+`.\tnasm full\path\to\name_of_file.asm`   
+`..\lcd\lcd.exe .\name_of_file.bin`
 
 <a/>
