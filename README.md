@@ -8,13 +8,13 @@
 
 
 ## Contents
-### [1. Overview](#ove)
-### [2. Core Architectural Elements](#cae)
-### [3. Instruction Encoding](#ire)
-### [4. Instruction Set](#irs)
-### [5. Reference Table](#ref)
-### [6. Syntax Help](#syn)
-### [7. Sample Programs](#sam)
+#### [1. Overview](#ove)
+#### [2. Core Architectural Elements](#cae)
+#### [3. Instruction Encoding](#ire)
+#### [4. Instruction Set](#irs)
+#### [5. Reference Table](#ref)
+#### [6. Syntax Help](#syn)
+#### [7. Running TeenyAT Systems](#run)
 
 <a name="ove">
 
@@ -61,6 +61,7 @@ A four bit immediate field can be used as flags. In order of highest to lowest o
 <a/>
 
 <a name="ire">
+
 ## 3. Instruction Encodings
 
 **First Word**
@@ -88,6 +89,8 @@ A four bit immediate field can be used as flags. In order of highest to lowest o
 <a name="irs">
 
 ## 4. Instruction Set
+All instructions are case insensitive. Either uppercase or lowercase instructions can be used in assembly code.
+
 ***Note:** Notice that all instructions are either three characters or less to maintain a sense of order when looking at the assembly code.*
 ### 4.1 SET
 - Opcode: 0
@@ -410,7 +413,7 @@ A four bit immediate field can be used as flags. In order of highest to lowest o
 <a name="syn">
 
 ## 6. Syntax
--   A line can start with any of the following
+-   A line can start with any of the following identifiers:
     -   .const for a constant line
         -   .const  Identifier  Value
         -   .const EXAMPLE 0xBEEF
@@ -418,40 +421,52 @@ A four bit immediate field can be used as flags. In order of highest to lowest o
         -   .var Identifier Value
         -   .var example 0xBEEF
     -   ! for a label
-        -   in this case the label includes the starting symbol
+        -   In this case the label includes the starting symbol
         -   !example
 ### 6.1 Instructions
--   An instruction this can be any of the instructions defined, above following there Syntax
--   Immediate values these insert into memory at the location they are found in code all the immediate values
-        found on that line
-    -   JMP !test <br/>  
-        0xBEEF 0xFEED 10 'r' 0b1111_0000_0000_0_1_0_0
-        -   This will insert immedate values in memory following the jump to test instruction 
-    -   !test
+-   An instruction can consist of any of the identifiers defined above. All instructions should follow their defined syntax.
+-   Immediate values insert all of the immediate values found on the line of code they appear on into memory.
+    -   JMP !test
+        -   This will insert immedate values in memory following the jump to test instruction. In this case, it would be 0xBeef 0xFeed 10 'r' 0b1111_0000_0000_0_1_0_0.
+    -   !test  
             0xBeef 0xFeed 10  'r' 0b1111_0000_0000_0_1_0_0
-        -   Here the test label points the the address of 0xBeef and can be used as the starting address of an array
-            of these values.
+        -   Here the test label points to the address of 0xBeef and can be used as the starting address of an array of these values.
 ### 6.2 Comments
-   -   Use a semicolon ';' to start a comment
-    -   This will make everything past the ; a comment on that line
+-   Use a semicolon ';' to start a comment.
+-   This will make everything past the ';' a comment on that line.
 ### 6.3 Labels
-   -   Use an exclamation point '!' for a label
-        -   in this case the label includes the starting symbol
-        -   !example
+-   Use an exclamation point '!' for a label
+    -   In this case, the label includes the starting symbol.
+    -   !example
 ### 6.4 Constants
-   -   Use the .const identifier for a constant line
-        -   .const  Identifier  Value
-        -   .const EXAMPLE 0xBEEF
+-   Use the .const or the .constant identifier for a constant line
+    -   .const  Identifier  Value
+    -   .const EXAMPLE 0xBEEF
 ### 6.5 Variables
-   -   Use the .var identifier for a variable line
-        -   .var Identifier Value
-        -   .var example 0xBEEF
-### 6.6 Etc.
+-   Use the .var or the .variable identifier for a variable line.
+    -   .var Identifier Value
+    -   .var example 0xBEEF
 
 <a/>
 
-<a name="sam">
+<a name="run">
 
-## 7. Sample Program
+## 7.0 Running TeenyAT Systems 
+TeenyAT systems use make files for compilation. 
+
+### Make the LCD system
+Run the following commands:  
+`cd lcd`  
+`make`  
+`cd tnasm`  
+`./tnasm path/to/name_of_file.asm`  
+(move bin file into lcd)  
+`cd ..\lcd`  
+`.\lcd.exe ./name_of_file.bin`
+
+
+
+
+
 
 <a/>
