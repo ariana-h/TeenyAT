@@ -455,11 +455,11 @@ All instructions are case insensitive. Either uppercase or lowercase instruction
 
 ### Run the LCD System
 Run the following commands:  
-`cd lcd`  
+`cd tnasm`  
 `make`  
-`cd ..\tnasm`  
+`cd ..\lcd`  
 `make`  
-`.\tnasm full\path\to\name_of_file.asm`   
-`..\lcd\lcd.exe .\name_of_file.bin`
+`..\tnasm\tnasm.exe .\asm\name_of_file.asm`  
+`.\lcd.exe .\name_of_file.bin`
 
 <a/>
